@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
-    <context id="test" targetRuntime="MyBatis3">
+        <context id="test" targetRuntime="MyBatis3">
         <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin>
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
@@ -25,25 +25,25 @@
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
         <!-- 生成模型的包名和位置 -->
-        <javaModelGenerator targetPackage="me.jinkun.rds.org.model"
+        <javaModelGenerator targetPackage="me.jinkun.rds.overtime.model"
                             targetProject="target">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
         <!-- 生成映射文件的包名和位置 -->
-        <sqlMapGenerator targetPackage="me.jinkun.rds.org.dao"
+        <sqlMapGenerator targetPackage="me.jinkun.rds.overtime.dao"
                          targetProject="target">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
         <!-- 生成DAO的包名和位置 -->
         <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="me.jinkun.rds.org.dao" implementationPackage="me.jinkun.rds.org.service.impl"
+                             targetPackage="me.jinkun.rds.overtime.dao" implementationPackage="me.jinkun.rds.overtime.service.impl"
                              targetProject="target">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
         <!-- 要生成哪些表 -->
-        <table tableName="`org_user`" domainObjectName="OrgUser"></table>
+        <table tableName="`overtime`" domainObjectName="overtime"></table>
 
         <!--<table tableName="`posttag`" domainObjectName="PostTag"></table>
 

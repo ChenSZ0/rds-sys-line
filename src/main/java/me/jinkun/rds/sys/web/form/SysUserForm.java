@@ -4,7 +4,7 @@ import me.jinkun.rds.common.base.BaseForm;
 
 /**
  * @Description: HelloWorld！ <br/>
- * @Autor: Created by JinKun on 2016-12-30.
+ * @Autor:
  */
 public class SysUserForm extends BaseForm {
 

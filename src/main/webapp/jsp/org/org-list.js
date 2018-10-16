@@ -1,32 +1,40 @@
 var ctx = "";//项目部署的工程名
 var OrgList;
-var SysUserEdit;
-var SysUserForm;
+var OrgUserEdit;
+var OrgUserForm;
 
 //其它组件
-var SysUserOrgTree;
-var SysUserOrg;
-var SysUserRole;
+var OrgUserOrgTree;
+var OrgUserOrg;
+var OrgUserRole;
 
-var SysUser = {
+var addTimeDialog;
+
+var OrgUser = {
     URL: {
         inputUI: function () {
-            return ctx + "/sys/users/ui/input";
+            return ctx + "/org/user/input";
+        },
+        overTimeUI: function () {
+            return ctx + "/overtime/to/input";
         },
         listUI: function () {
             return ctx + "/sys/users/ui/list";
         },
         list: function () {
-            return ctx + "/sys/users/";
+            return ctx + "/org/list";
         },
         save: function () {
-            return ctx + "/sys/users/";
+            return ctx + "/org/save";
         },
         delete: function (ids) {
-            return ctx + "/sys/users/" + ids;
+            return ctx + "/org/del/" + ids;
         },
         get: function (id) {
-            return ctx + "/sys/users/" + id;
+            return ctx + "/org/get/" + id;
+        },
+        addTime: function (id) {
+            return ctx + "/overtime/getOverTime/" + id;
         },
         orgTree: function () {
             return ctx + "/sys/orgs/tree";
@@ -38,17 +46,17 @@ var SysUser = {
     input: {
         init: function (ct) {
             ctx = ct;
-            SysUser.input.initComponent();
-            SysUser.input.initForm();
+            OrgUser.input.initComponent();
+            OrgUser.input.initForm();
         },
         initComponent: function () {
-            SysUserForm = $("#SysUserForm");
-            SysUserOrg = $("#SysUserOrg");
-            SysUserRole = $("#SysUserRole");
+            OrgUserForm = $("#OrgUserForm");
+            OrgUserOrg = $("#OrgUserOrg");
+            OrgUserRole = $("#OrgUserRole");
         },
         initForm: function () {
-            SysUserForm.form({
-                url: SysUser.URL.save(),
+            OrgUserForm.form({
+                url: OrgUser.URL.save(),
                 onSubmit: function () {
                     // do some check
                     // return false to prevent submit;
@@ -56,38 +64,39 @@ var SysUser = {
                 success: function (data) {
                     var data = eval('(' + data + ')');
                     if (data.code == 200) {
-                        SysUser.input.close();
-                        SysUser.list.reload();
+                        OrgUser.input.close();
+                        OrgUser.list.reload();
                     }
                 }
             });
         },
         submitForm: function () {
-            // submit the form
-            SysUserForm.submit();
+            if(OrgUserForm.form('validate'))
+            OrgUserForm.submit();
         },
         close: function () {
-            SysUserEdit.dialog('close');
+            OrgUserEdit.dialog('close');
         }
     },
     list: {
         init: function (ct) {
             ctx = ct;
-            SysUser.list.initComponent();
-            SysUser.list.initOrgTree();
-            SysUser.list.initList();
+            OrgUser.list.initComponent();
+            OrgUser.list.initOrgTree();
+            OrgUser.list.initList();
         },
         initComponent: function () {
             OrgList = $("#OrgList");
-            SysUserEdit = $('#SysUserEdit');
-            SysUserOrgTree = $('#SysUserOrgTree');
+            OrgUserEdit = $('#OrgUserEdit');
+            OrgUserOrgTree = $('#OrgUserOrgTree');
+            addTimeDialog = $('#addTimeDialog');
         },
         initOrgTree: function () {
-            SysUserOrgTree.tree({
+            OrgUserOrgTree.tree({
                 method: 'get',
-                url: SysUser.URL.orgTree(),
+                url: OrgUser.URL.orgTree(),
                 onSelect: function (node) {
-                    if (SysUserOrgTree.tree('isLeaf', node.target)) {
+                    if (OrgUserOrgTree.tree('isLeaf', node.target)) {
                         OrgList.datagrid({
                             queryParams: {orgId: node.id},
                         });
@@ -97,11 +106,11 @@ var SysUser = {
         },
         initList: function () {
             OrgList.datagrid({
-                url: SysUser.URL.list(),
+                url: OrgUser.URL.list(),
                 method: 'get',
                 pagination: true,
                 pageSize: 30,
-                toolbar: '#OrgToolbar',//SysUser.list.toolbar,
+                toolbar: '#OrgToolbar',//OrgUser.list.toolbar,
                 singleSelect: false,
                 collapsible: false,
                 columns: [[
@@ -128,19 +137,19 @@ var SysUser = {
         },
         //增
         add: function () {
-            SysUserEdit.dialog({
-                    href: SysUser.URL.inputUI(),
+            OrgUserEdit.dialog({
+                    href: OrgUser.URL.inputUI(),
                     onLoad: function () {
-                        SysUserOrg.combotree({
-                            url: SysUser.URL.orgTree(),
+                        /*OrgUserOrg.combotree({
+                            url: OrgUser.URL.orgTree(),
                             method: 'get',
                             panelHeight: 'auto'
                         });
-                        SysUserRole.combobox({
-                            url: SysUser.URL.roleListAll(),
+                        OrgUserRole.combobox({
+                            url: OrgUser.URL.roleListAll(),
                             method: 'get',
                             panelHeight: 'auto'
-                        });
+                        });*/
                     }
                 })
                 .dialog("open");
@@ -158,34 +167,34 @@ var SysUser = {
                 return;
             }
 
-            SysUserEdit.dialog({
-                    href: SysUser.URL.inputUI(),
+            OrgUserEdit.dialog({
+                    href: OrgUser.URL.inputUI(),
                     onLoad: function () {
                         //方案一：使用Form的load去load数据
-                        //SysUserForm.form("load", SysUser.URL.get(sels[0].id));
+                        //OrgUserForm.form("load", OrgUser.URL.get(sels[0].id));
                         //方案二：直接使用列表的row数据
-                        //SysUserForm.form("load",sels[0]);
+                        //OrgUserForm.form("load",sels[0]);
                         //方案三：使用Ajax请求数据
                         $.ajax({
                             type: "GET",
-                            url: SysUser.URL.get(sels[0].id),
+                            url: OrgUser.URL.get(sels[0].id),
                             success: function (data) {
                                 if (data.code == 200) {
-                                    SysUserForm.form("load", data.data);
-                                    SysUserOrg.combotree({
-                                        url: SysUser.URL.orgTree(),
+                                    OrgUserForm.form("load", data.data);
+                                    OrgUserOrg.combotree({
+                                        url: OrgUser.URL.orgTree(),
                                         method: 'get',
                                         panelHeight: 'auto',
                                         onLoadSuccess: function () {
-                                            SysUserOrg.combotree('setValue', data.data.orgId);
+                                            OrgUserOrg.combotree('setValue', data.data.orgId);
                                         }
                                     });
-                                    SysUserRole.combobox({
-                                        url: SysUser.URL.roleListAll(),
+                                    OrgUserRole.combobox({
+                                        url: OrgUser.URL.roleListAll(),
                                         method: 'get',
                                         panelHeight: 'auto',
                                         onLoadSuccess: function () {
-                                            SysUserRole.combobox('setValues', data.data.roleId);
+                                            OrgUserRole.combobox('setValues', data.data.roleId);
                                         }
                                     });
                                 }
@@ -195,9 +204,40 @@ var SysUser = {
                 })
                 .dialog("open");
         },
+        addTime:function(){
+            var sels = OrgList.datagrid("getSelections");
+            if (sels.length < 1) {
+                $.messager.alert("对话框", "至少选择一行");
+                return;
+            }
+
+            if (sels.length > 1) {
+                $.messager.alert("对话框", "只能选择一行");
+                return;
+            }
+            addTimeDialog.dialog({
+                href: OrgUser.URL.overTimeUI(),
+                onLoad: function () {
+                    //方案一：使用Form的load去load数据
+                    //OrgUserForm.form("load", OrgUser.URL.get(sels[0].id));
+                    //方案二：直接使用列表的row数据
+                    //OrgUserForm.form("load",sels[0]);
+                    //方案三：使用Ajax请求数据
+                    $.ajax({
+                        type: "GET",
+                        url: OrgUser.URL.addTime(sels[0].id),
+                        success: function (data) {
+                            if (data.code == 200) {
+                                OrgUserForm.form("load", data.data);
+                            }
+                        }
+                    });
+                }
+            }).dialog("open");
+        },
         //删
         delete: function () {
-            var ids = SysUser.list.getSelectionsIds();
+            var ids = OrgUser.list.getSelectionsIds();
             if (ids.length == 0) {
                 $.messager.alert("对话框", "至少选择一行");
                 return;
@@ -210,10 +250,10 @@ var SysUser = {
                     if (r) {
                         $.ajax({
                             type: "DELETE",
-                            url: SysUser.URL.delete(ids),
+                            url: OrgUser.URL.delete(ids),
                             success: function () {
-                                SysUser.list.reload();
-                                SysUser.list.clearSelectionsAndChecked();
+                                OrgUser.list.reload();
+                                OrgUser.list.clearSelectionsAndChecked();
                             }
                         });
                     }
@@ -232,7 +272,7 @@ var SysUser = {
         search: function () {
             var searchName = [];
             var searchValue = [];
-            $("input[lang='searchSysUser']").each(function (i) {
+            $("input[lang='searchOrgUser']").each(function (i) {
                 searchName[i] = $(this).attr("name");
                 searchValue[i] = $(this).val();
             });
@@ -247,7 +287,7 @@ var SysUser = {
                 queryParams: eval('(' + queryParams + ')'),
                 onLoadSuccess: function (data) {
                     //回显搜索内容
-                    $("input[lang='searchSysUser']").each(function (i) {
+                    $("input[lang='searchOrgUser']").each(function (i) {
                         $(this).val(searchValue[i]);
                     });
                 }
@@ -255,7 +295,7 @@ var SysUser = {
         },
         //清空
         clear: function () {
-            $("input[lang='searchSysUser']").each(function (i) {
+            $("input[lang='searchOrgUser']").each(function (i) {
                 $(this).val("");
             });
         }
