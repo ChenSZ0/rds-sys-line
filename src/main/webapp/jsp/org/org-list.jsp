@@ -22,9 +22,9 @@
     </div>
 </div>
 <!-- 弹窗  --> <!-- inline:true 不然多次打开tab会重复提交表单 -->
-<div id="OrgUserEdit" title="用户"  style="width:500px;height:500px;top: 100px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){OrgUser.input.submitForm()}},{text:'取消',iconCls:'icon-cancel',handler:function(){SysUser.input.close()}}]"></div>
+<div id="OrgUserEdit" title="用户"  style="width:500px;height:500px;top: 100px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){OrgUser.input.submitForm()}},{text:'取消',iconCls:'icon-cancel',handler:function(){OrgUser.input.close()}}]"></div>
 
-<div id="addTimeDialog" title="用户加班情况"  style="width:500px;height:500px;top: 100px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){OrgUser.input.submitForm()}},{text:'取消',iconCls:'icon-cancel',handler:function(){SysUser.input.close()}}]"></div>
+<div id="addTimeDialog" title="用户加班情况"  style="width:500px;height:500px;top: 100px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){form2Submit()}},{text:'取消',iconCls:'icon-cancel',handler:function(){OrgUser.input.close()}}]"></div>
 
 <script src="<%=request.getContextPath()%>/jsp/org/org-list.js"></script>
 <script>

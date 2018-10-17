@@ -228,7 +228,7 @@ var OrgUser = {
                         url: OrgUser.URL.addTime(sels[0].id),
                         success: function (data) {
                             if (data.code == 200) {
-                                OrgUserForm.form("load", data.data);
+                                $('#overTimeForm').form("load", data.data);
                             }
                         }
                     });

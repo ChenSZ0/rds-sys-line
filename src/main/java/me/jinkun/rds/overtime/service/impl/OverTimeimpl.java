@@ -30,6 +30,7 @@ public class OverTimeimpl implements OverTimeServie {
         criteria.andUserIdEqualTo(userId);
         int count = overtimeMapper.countByExample(overtimeExample);
         Map<String, Object> map = new HashMap<>();
+        map.put("id",userId);
         map.put("count",count);
         map.put("name",orgUserMapper.selectByPrimaryKey(userId).getName());
         return BaseResult.ok("获取成功",map);
