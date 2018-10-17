@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * 安全框架角色资源配置服务类
  *
- * @author shadow
+ * @author
  */
 public abstract class AbstractFilterChainDefinitionsService implements FilterChainDefinitionsService {
 

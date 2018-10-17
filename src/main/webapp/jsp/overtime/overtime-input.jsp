@@ -17,7 +17,7 @@
         <tr>
             <td></td>
             <td><label>出差时间:</label></td>
-            <td><input type="text" class="easyui-datebox" required="required" name="outTime"><a href="javascript:outDate(1)">增加</a></td>
+            <td><input type="text" class="easyui-datetimebox outtimeAdd" required="required" name="outTime"><a href="javascript:outDate(1)">增加</a></td>
             <td></td>
         </tr>
     </table>
@@ -25,7 +25,7 @@
         <tr>
             <td></td>
             <td><label>休假时间:&nbsp;&nbsp;</label></td>
-            <td><input type="text" class="easyui-datebox" required="required" name="vacationTime"><a href="javascript:outDate(2)">增加</a></td>
+            <td><input type="text" class="easyui-datetimebox vacationTimeAdd" required="required" name="vacationTime"><a href="javascript:outDate(2)">增加</a></td>
             <td></td>
         </tr>
     </table>
@@ -41,14 +41,14 @@
             var targetObj = $("<tr class='outData'>\n" +
                 "            <td></td>\n" +
                 "            <td><label></label></td>\n" +
-                "            <td><input type=\"text\" class=\"easyui-datebox\"  name=\"outTime\" required=\"required\"><a href=\"javascript:removeDate(1)\">移除</a></td>\n" +
+                "            <td><input type=\"text\" class=\"easyui-datetimebox outtimeAdd\"  name=\"outTime\" required=\"required\"><a href=\"javascript:removeDate(1)\">移除</a></td>\n" +
                 "            <td></td>\n" +
                 "        </tr>").appendTo("#tab1");
         }else if(obj==2){
             var targetObj = $("<tr class='outData2'>\n" +
                 "            <td></td>\n" +
                 "            <td><label></label></td>\n" +
-                "            <td><input type=\"text\" class=\"easyui-datebox\"  name=\"vacationTime\" required=\"required\"><a href=\"javascript:removeDate(2)\">移除</a></td>\n" +
+                "            <td><input type=\"text\" class=\"easyui-datetimebox vacationTimeAdd\"  name=\"vacationTime\" required=\"required\"><a href=\"javascript:removeDate(2)\">移除</a></td>\n" +
                 "            <td></td>\n" +
                 "        </tr>").appendTo("#tab2");
         }
@@ -66,7 +66,39 @@
 
     function form2Submit(){
         debugger;
-        console.log($("#overTimeForm").serialize());
+        var data =$("#overTimeForm").serialize();
+        //console.log($("#overTimeForm").serialize());
+        var beforeStr=data.substring(0,data.indexOf("outTime")-1);
+        //console.log(beforeStr);
+        var endStr=data.substring(data.indexOf("outTime"));
+       // console.log(endStr);
+        var arr=endStr.split("&");
+        var outTimeData="";
+        var vacationTimeData="";
+        for(var i=0;i<arr.length;i++){
+            var index=arr[i].indexOf("outTime=");
+            if(index>-1){
+                outTimeData=outTimeData+arr[i].substring(8)+","
+            }else{
+               index= arr[i].indexOf("vacationTime=");
+               if(index>-1){
+                   vacationTimeData=vacationTimeData+arr[i].substring(13)+",";
+               }
+            }
+        }
+        //console.log(outTimeData);
+       // console.log(vacationTimeData);
+
+        var ajaxData=beforeStr+"&outTime="+outTimeData.substring(0,outTimeData.length-1)+"&vacationTime="+vacationTimeData.substring(0,vacationTimeData.length-1);
+        console.log(ajaxData);
+        $.ajax({
+            type: "POST",
+            url: "/overtime/saveData",
+            data: ajaxData,
+            success: function(data){
+                debugger;
+            }
+        });
     }
 
 </script>

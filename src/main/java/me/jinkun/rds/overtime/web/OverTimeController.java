@@ -1,5 +1,6 @@
 package me.jinkun.rds.overtime.web;
 
+import me.jinkun.rds.overtime.dto.OverTimeDTO;
 import me.jinkun.rds.overtime.service.OverTimeServie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,13 @@ public class OverTimeController {
     @ResponseBody
     public Object getOverTime(@PathVariable Long userId){
         return overTimeServie.getOverTime(userId);
+    }
+
+    @RequestMapping(value = "/saveData",method = RequestMethod.POST)
+    @ResponseBody
+    public Object saveData(OverTimeDTO dto){
+        System.out.println(dto);
+        return overTimeServie.saveData(dto);
 
     }
 }
