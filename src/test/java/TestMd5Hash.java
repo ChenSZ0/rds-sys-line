@@ -1,4 +1,4 @@
-import me.jinkun.rds.common.utils.UtilMd5;
+import me.jy.rds.common.utils.UtilMd5;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.junit.Test;

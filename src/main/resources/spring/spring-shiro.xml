@@ -21,7 +21,7 @@
     </bean>
 
     <!-- 2. 自定义Realm来管理权限 -->
-    <bean id="shiroDbRealm" class="me.jinkun.rds.common.shiro.ShiroDbRealm">
+    <bean id="shiroDbRealm" class="me.jy.rds.common.shiro.ShiroDbRealm">
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
     </bean>
 
