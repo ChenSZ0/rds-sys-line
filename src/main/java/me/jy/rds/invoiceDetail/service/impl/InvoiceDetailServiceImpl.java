@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Cshuzhuo
@@ -56,7 +58,7 @@ public class InvoiceDetailServiceImpl  implements InvoiceDetailService {
             int result = invoiceDetailMapper.insert(model);
             if(result>0) return BaseResult.ok("保存成功!");
         }else{
-            int result = invoiceDetailMapper.updateByPrimaryKey(model);
+            int result = invoiceDetailMapper.updateByPrimaryKeySelective(model);
             if(result>0) return BaseResult.ok("更新成功!");
         }
         return BaseResult.fail("保存失败!!");
@@ -77,6 +79,34 @@ public class InvoiceDetailServiceImpl  implements InvoiceDetailService {
         InvoiceDetail orgUser = invoiceDetailMapper.selectByPrimaryKey(id);
         return BaseResult.ok("获取信息成功",orgUser);
     }
+
+    @Override
+    public BaseResult getData(int month) {
+        InvoiceDetailExample example = new InvoiceDetailExample();
+        InvoiceDetailExample.Criteria criteria = example.createCriteria();
+
+        criteria.andMonthEqualTo(String.valueOf(month));
+        example.setOrderByClause("card_name asc");
+        List<InvoiceDetail> sysUserList = invoiceDetailMapper.selectByExample(example);
+        Map<String, Object> map = new HashMap<>();
+        List<List<InvoiceDetail>> list = new ArrayList<>();
+
+        List<InvoiceDetail> resultList=null;
+        for (int i = 0; i < sysUserList.size(); i++) {
+            InvoiceDetail invoiceDetail = sysUserList.get(i);
+            Object put = map.put(invoiceDetail.getCardName(), invoiceDetail.getCardName());
+
+            if(put==null){
+                resultList = new ArrayList<>();
+                resultList.add(invoiceDetail);
+                list.add(resultList);
+            }else{
+                resultList.add(invoiceDetail);
+            }
+        }
+        return BaseResult.ok("获取信息成功",list);
+    }
+
     private List<Long> idsToList(String ids) {
         String[] id = ids.split(",");
         List<Long> idList = new ArrayList<>();
@@ -85,4 +115,6 @@ public class InvoiceDetailServiceImpl  implements InvoiceDetailService {
         }
         return idList;
     }
+
+
 }

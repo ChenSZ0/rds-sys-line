@@ -17,4 +17,6 @@ public interface InvoiceDetailService {
     BaseResult deleteByIds(String ids);
 
     BaseResult get(Long id);
+
+    BaseResult getData(int month);
 }

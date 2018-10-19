@@ -4,6 +4,7 @@
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" plain="true" onclick="javascript:Invoice.list.add()">增加</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" plain="true" onclick="javascript:Invoice.list.delete()">删除</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" plain="true" onclick="javascript:Invoice.list.edit()">编辑</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" plain="true" onclick="javascript:Invoice.list.print()">打印</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" plain="true" onclick="javascript:Invoice.list.reload()">刷新</a>
     <span style="float: right;margin-right: 10px;padding: 1px">
         <span>持卡人:</span>
@@ -25,9 +26,7 @@
 <!-- 弹窗  --> <!-- inline:true 不然多次打开tab会重复提交表单 -->
 <div id="InvoiceEdit" title="报销明细"  style="width:500px;height:500px;top: 100px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){Invoice.input.submitForm()}},{text:'取消',iconCls:'icon-cancel',handler:function(){Invoice.input.close()}}]"></div>
 
-<%--
-<div id="addTimeDialog" title="用户加班情况"  style="width:500px;height:500px;top: 100px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){form2Submit()}},{text:'取消',iconCls:'icon-cancel',handler:function(){OrgUser.input.close()}}]"></div>
---%>
+<div id="printDialog" title="打印"  style="width:500px;height:500px;top: 100px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){printSubmit()}},{text:'取消',iconCls:'icon-cancel',handler:function(){OrgUser.input.close()}}]"></div>
 
 <script src="<%=request.getContextPath()%>/jsp/invoice/invoice-list.js"></script>
 <script>

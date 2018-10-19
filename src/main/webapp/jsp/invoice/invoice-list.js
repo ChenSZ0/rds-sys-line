@@ -8,7 +8,7 @@ var OrgUserOrgTree;
 var OrgUserOrg;
 var OrgUserRole;
 
-var addTimeDialog;
+var printDialog;
 
 
 
@@ -19,7 +19,7 @@ var addTimeDialog;
             return ctx + "/invoice/toView/input";
         },
         overTimeUI: function () {
-            return ctx + "/overtime/to/input";
+            return ctx + "/invoice/toView/print";
         },
         listUI: function () {
             return ctx + "/sys/users/ui/list";
@@ -92,7 +92,7 @@ var addTimeDialog;
             InvoiceList = $("#InvoiceList");
             InvoiceEdit = $('#InvoiceEdit');
             // InvoiceOrgTree = $('#InvoiceOrgTree');
-            // addTimeDialog = $('#addTimeDialog');
+            printDialog = $('#printDialog');
         },
        /* initOrgTree: function () {
             InvoiceOrgTree.tree({
@@ -213,7 +213,7 @@ var addTimeDialog;
                                     $('#receivedTime').datetimebox('setValue', new Date(data.data.receivedTime).format("yyyy-MM-dd hh:mm:ss"));
                                     $('#consumeTime').datetimebox('setValue', new Date(data.data.consumeTime).format("yyyy-MM-dd hh:mm:ss"));
                                     $('#accountTime').datetimebox('setValue', new Date(data.data.accountTime).format("yyyy-MM-dd hh:mm:ss"));
-
+                                    console.log(data.data.id);
                                     $("#InvoiceId").val(data.data.id);
                                     $("#number").textbox("setValue",data.data.number);
                                     $("#ticketName").textbox("setValue",data.data.ticketName);
@@ -236,8 +236,8 @@ var addTimeDialog;
                 })
                 .dialog("open");
         },
-        addTime:function(){
-            var sels = InvoiceList.datagrid("getSelections");
+        print:function(){
+          /*  var sels = InvoiceList.datagrid("getSelections");
             if (sels.length < 1) {
                 $.messager.alert("对话框", "至少选择一行");
                 return;
@@ -246,16 +246,16 @@ var addTimeDialog;
             if (sels.length > 1) {
                 $.messager.alert("对话框", "只能选择一行");
                 return;
-            }
-            addTimeDialog.dialog({
+            }*/
+            printDialog.dialog({
                 href: Invoice.URL.overTimeUI(),
-                onLoad: function () {
+                //onLoad: function () {
                     //方案一：使用Form的load去load数据
                     //InvoiceForm.form("load", Invoice.URL.get(sels[0].id));
                     //方案二：直接使用列表的row数据
                     //InvoiceForm.form("load",sels[0]);
                     //方案三：使用Ajax请求数据
-                    $.ajax({
+                   /* $.ajax({
                         type: "GET",
                         url: Invoice.URL.addTime(sels[0].id),
                         success: function (data) {
@@ -263,8 +263,8 @@ var addTimeDialog;
                                 $('#overTimeForm').form("load", data.data);
                             }
                         }
-                    });
-                }
+                    });*/
+               // }
             }).dialog("open");
         },
         //删
