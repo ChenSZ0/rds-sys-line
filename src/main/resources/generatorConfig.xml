@@ -25,26 +25,25 @@
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
         <!-- 生成模型的包名和位置 -->
-        <javaModelGenerator targetPackage="me.jy.rds.vacationtime.model"
-                            targetProject=".\src\main\java\">
+        <javaModelGenerator targetPackage="me.jy.rds.invoiceDetail.model"
+                            targetProject="target">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
         <!-- 生成映射文件的包名和位置 -->
-        <sqlMapGenerator targetPackage="me.jy.rds.vacationtime.dao"
-                         targetProject=".\src\main\java\">
+        <sqlMapGenerator targetPackage="me.jy.rds.invoiceDetail.dao"
+                         targetProject="target">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
         <!-- 生成DAO的包名和位置 -->
         <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="me.jy.rds.vacationtime.dao" implementationPackage="me.jy.rds.vacationtime.service.impl"
-                             targetProject=".\src\main\java\">
+                             targetPackage="me.jy.rds.invoiceDetail.dao" implementationPackage="me.jy.rds.invoiceDetail.service.impl"
+                             targetProject="target">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
         <!-- 要生成哪些表 -->
-        <table tableName="`vacationtime`" domainObjectName="Vacationtime"></table>
-
+        <table tableName="`invoice_detail`" domainObjectName="InvoiceDetail"></table>
 
 
     </context>

@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.jy.rds.invoiceDetail.dao.InvoiceDetailMapper" >
+  <resultMap id="BaseResultMap" type="me.jy.rds.invoiceDetail.model.InvoiceDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="ticket_user" property="ticketUser" jdbcType="BIGINT" />
+    <result column="ticket_name" property="ticketName" jdbcType="VARCHAR" />
+    <result column="card_user" property="cardUser" jdbcType="BIGINT" />
+    <result column="card_name" property="cardName" jdbcType="VARCHAR" />
+    <result column="card_num" property="cardNum" jdbcType="VARCHAR" />
+    <result column="consume_time" property="consumeTime" jdbcType="TIMESTAMP" />
+    <result column="card_money" property="cardMoney" jdbcType="DECIMAL" />
+    <result column="cash_money" property="cashMoney" jdbcType="DECIMAL" />
+    <result column="cash_subsidy" property="cashSubsidy" jdbcType="DECIMAL" />
+    <result column="responsible_user" property="responsibleUser" jdbcType="BIGINT" />
+    <result column="responsible_name" property="responsibleName" jdbcType="VARCHAR" />
+    <result column="invoice_type_id" property="invoiceTypeId" jdbcType="BIGINT" />
+    <result column="invoice_type" property="invoiceType" jdbcType="VARCHAR" />
+    <result column="month" property="month" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="refund" property="refund" jdbcType="VARCHAR" />
+    <result column="receiving_time" property="receivingTime" jdbcType="TIMESTAMP" />
+    <result column="received_time" property="receivedTime" jdbcType="TIMESTAMP" />
+    <result column="account_time" property="accountTime" jdbcType="TIMESTAMP" />
+    <result column="purpose" property="purpose" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, number, ticket_user, ticket_name, card_user, card_name, card_num, consume_time, 
+    card_money, cash_money, cash_subsidy, responsible_user, responsible_name, invoice_type_id, 
+    invoice_type, month, summary, refund, receiving_time, received_time, account_time, 
+    purpose, remark, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.jy.rds.invoiceDetail.model.InvoiceDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from invoice_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from invoice_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from invoice_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.jy.rds.invoiceDetail.model.InvoiceDetailExample" >
+    delete from invoice_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.jy.rds.invoiceDetail.model.InvoiceDetail" >
+    insert into invoice_detail (id, number, ticket_user, 
+      ticket_name, card_user, card_name, 
+      card_num, consume_time, card_money, 
+      cash_money, cash_subsidy, responsible_user, 
+      responsible_name, invoice_type_id, invoice_type, 
+      month, summary, refund, 
+      receiving_time, received_time, account_time, 
+      purpose, remark, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{number,jdbcType=VARCHAR}, #{ticketUser,jdbcType=BIGINT}, 
+      #{ticketName,jdbcType=VARCHAR}, #{cardUser,jdbcType=BIGINT}, #{cardName,jdbcType=VARCHAR}, 
+      #{cardNum,jdbcType=VARCHAR}, #{consumeTime,jdbcType=TIMESTAMP}, #{cardMoney,jdbcType=DECIMAL}, 
+      #{cashMoney,jdbcType=DECIMAL}, #{cashSubsidy,jdbcType=DECIMAL}, #{responsibleUser,jdbcType=BIGINT}, 
+      #{responsibleName,jdbcType=VARCHAR}, #{invoiceTypeId,jdbcType=BIGINT}, #{invoiceType,jdbcType=VARCHAR}, 
+      #{month,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{refund,jdbcType=VARCHAR}, 
+      #{receivingTime,jdbcType=TIMESTAMP}, #{receivedTime,jdbcType=TIMESTAMP}, #{accountTime,jdbcType=TIMESTAMP}, 
+      #{purpose,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="me.jy.rds.invoiceDetail.model.InvoiceDetail" >
+    insert into invoice_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="ticketUser != null" >
+        ticket_user,
+      </if>
+      <if test="ticketName != null" >
+        ticket_name,
+      </if>
+      <if test="cardUser != null" >
+        card_user,
+      </if>
+      <if test="cardName != null" >
+        card_name,
+      </if>
+      <if test="cardNum != null" >
+        card_num,
+      </if>
+      <if test="consumeTime != null" >
+        consume_time,
+      </if>
+      <if test="cardMoney != null" >
+        card_money,
+      </if>
+      <if test="cashMoney != null" >
+        cash_money,
+      </if>
+      <if test="cashSubsidy != null" >
+        cash_subsidy,
+      </if>
+      <if test="responsibleUser != null" >
+        responsible_user,
+      </if>
+      <if test="responsibleName != null" >
+        responsible_name,
+      </if>
+      <if test="invoiceTypeId != null" >
+        invoice_type_id,
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="refund != null" >
+        refund,
+      </if>
+      <if test="receivingTime != null" >
+        receiving_time,
+      </if>
+      <if test="receivedTime != null" >
+        received_time,
+      </if>
+      <if test="accountTime != null" >
+        account_time,
+      </if>
+      <if test="purpose != null" >
+        purpose,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketUser != null" >
+        #{ticketUser,jdbcType=BIGINT},
+      </if>
+      <if test="ticketName != null" >
+        #{ticketName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardUser != null" >
+        #{cardUser,jdbcType=BIGINT},
+      </if>
+      <if test="cardName != null" >
+        #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNum != null" >
+        #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeTime != null" >
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cardMoney != null" >
+        #{cardMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="cashMoney != null" >
+        #{cashMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="cashSubsidy != null" >
+        #{cashSubsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="responsibleUser != null" >
+        #{responsibleUser,jdbcType=BIGINT},
+      </if>
+      <if test="responsibleName != null" >
+        #{responsibleName,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTypeId != null" >
+        #{invoiceTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceType != null" >
+        #{invoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="refund != null" >
+        #{refund,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingTime != null" >
+        #{receivingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receivedTime != null" >
+        #{receivedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountTime != null" >
+        #{accountTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purpose != null" >
+        #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.jy.rds.invoiceDetail.model.InvoiceDetailExample" resultType="java.lang.Integer" >
+    select count(*) from invoice_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update invoice_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketUser != null" >
+        ticket_user = #{record.ticketUser,jdbcType=BIGINT},
+      </if>
+      <if test="record.ticketName != null" >
+        ticket_name = #{record.ticketName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardUser != null" >
+        card_user = #{record.cardUser,jdbcType=BIGINT},
+      </if>
+      <if test="record.cardName != null" >
+        card_name = #{record.cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardNum != null" >
+        card_num = #{record.cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consumeTime != null" >
+        consume_time = #{record.consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cardMoney != null" >
+        card_money = #{record.cardMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cashMoney != null" >
+        cash_money = #{record.cashMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cashSubsidy != null" >
+        cash_subsidy = #{record.cashSubsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="record.responsibleUser != null" >
+        responsible_user = #{record.responsibleUser,jdbcType=BIGINT},
+      </if>
+      <if test="record.responsibleName != null" >
+        responsible_name = #{record.responsibleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceTypeId != null" >
+        invoice_type_id = #{record.invoiceTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.invoiceType != null" >
+        invoice_type = #{record.invoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.month != null" >
+        month = #{record.month,jdbcType=VARCHAR},
+      </if>
+      <if test="record.summary != null" >
+        summary = #{record.summary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refund != null" >
+        refund = #{record.refund,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivingTime != null" >
+        receiving_time = #{record.receivingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.receivedTime != null" >
+        received_time = #{record.receivedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accountTime != null" >
+        account_time = #{record.accountTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purpose != null" >
+        purpose = #{record.purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update invoice_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      number = #{record.number,jdbcType=VARCHAR},
+      ticket_user = #{record.ticketUser,jdbcType=BIGINT},
+      ticket_name = #{record.ticketName,jdbcType=VARCHAR},
+      card_user = #{record.cardUser,jdbcType=BIGINT},
+      card_name = #{record.cardName,jdbcType=VARCHAR},
+      card_num = #{record.cardNum,jdbcType=VARCHAR},
+      consume_time = #{record.consumeTime,jdbcType=TIMESTAMP},
+      card_money = #{record.cardMoney,jdbcType=DECIMAL},
+      cash_money = #{record.cashMoney,jdbcType=DECIMAL},
+      cash_subsidy = #{record.cashSubsidy,jdbcType=DECIMAL},
+      responsible_user = #{record.responsibleUser,jdbcType=BIGINT},
+      responsible_name = #{record.responsibleName,jdbcType=VARCHAR},
+      invoice_type_id = #{record.invoiceTypeId,jdbcType=BIGINT},
+      invoice_type = #{record.invoiceType,jdbcType=VARCHAR},
+      month = #{record.month,jdbcType=VARCHAR},
+      summary = #{record.summary,jdbcType=VARCHAR},
+      refund = #{record.refund,jdbcType=VARCHAR},
+      receiving_time = #{record.receivingTime,jdbcType=TIMESTAMP},
+      received_time = #{record.receivedTime,jdbcType=TIMESTAMP},
+      account_time = #{record.accountTime,jdbcType=TIMESTAMP},
+      purpose = #{record.purpose,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.jy.rds.invoiceDetail.model.InvoiceDetail" >
+    update invoice_detail
+    <set >
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketUser != null" >
+        ticket_user = #{ticketUser,jdbcType=BIGINT},
+      </if>
+      <if test="ticketName != null" >
+        ticket_name = #{ticketName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardUser != null" >
+        card_user = #{cardUser,jdbcType=BIGINT},
+      </if>
+      <if test="cardName != null" >
+        card_name = #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNum != null" >
+        card_num = #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeTime != null" >
+        consume_time = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cardMoney != null" >
+        card_money = #{cardMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="cashMoney != null" >
+        cash_money = #{cashMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="cashSubsidy != null" >
+        cash_subsidy = #{cashSubsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="responsibleUser != null" >
+        responsible_user = #{responsibleUser,jdbcType=BIGINT},
+      </if>
+      <if test="responsibleName != null" >
+        responsible_name = #{responsibleName,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTypeId != null" >
+        invoice_type_id = #{invoiceTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type = #{invoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="refund != null" >
+        refund = #{refund,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingTime != null" >
+        receiving_time = #{receivingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receivedTime != null" >
+        received_time = #{receivedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountTime != null" >
+        account_time = #{accountTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purpose != null" >
+        purpose = #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.jy.rds.invoiceDetail.model.InvoiceDetail" >
+    update invoice_detail
+    set number = #{number,jdbcType=VARCHAR},
+      ticket_user = #{ticketUser,jdbcType=BIGINT},
+      ticket_name = #{ticketName,jdbcType=VARCHAR},
+      card_user = #{cardUser,jdbcType=BIGINT},
+      card_name = #{cardName,jdbcType=VARCHAR},
+      card_num = #{cardNum,jdbcType=VARCHAR},
+      consume_time = #{consumeTime,jdbcType=TIMESTAMP},
+      card_money = #{cardMoney,jdbcType=DECIMAL},
+      cash_money = #{cashMoney,jdbcType=DECIMAL},
+      cash_subsidy = #{cashSubsidy,jdbcType=DECIMAL},
+      responsible_user = #{responsibleUser,jdbcType=BIGINT},
+      responsible_name = #{responsibleName,jdbcType=VARCHAR},
+      invoice_type_id = #{invoiceTypeId,jdbcType=BIGINT},
+      invoice_type = #{invoiceType,jdbcType=VARCHAR},
+      month = #{month,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      refund = #{refund,jdbcType=VARCHAR},
+      receiving_time = #{receivingTime,jdbcType=TIMESTAMP},
+      received_time = #{receivedTime,jdbcType=TIMESTAMP},
+      account_time = #{accountTime,jdbcType=TIMESTAMP},
+      purpose = #{purpose,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
