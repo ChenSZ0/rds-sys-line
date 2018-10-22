@@ -96,7 +96,14 @@
             url: "/overtime/saveData",
             data: ajaxData,
             success: function(data){
-                debugger;
+                if(data.code==200){
+                    $("#addTimeDialog").dialog('close');
+                    OrgList.datagrid("reload");
+                }else{
+                    alert("保存失败!");
+                    console.log("data");
+                }
+
             }
         });
     }
