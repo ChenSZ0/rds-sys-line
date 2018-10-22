@@ -2,6 +2,7 @@ var ctx = "";//项目部署的工程名
 var OrgList;
 var OrgUserEdit;
 var OrgUserForm;
+var printMonthDialog;
 
 //其它组件
 var OrgUserOrgTree;
@@ -17,6 +18,9 @@ var OrgUser = {
         },
         overTimeUI: function () {
             return ctx + "/overtime/to/input";
+        },
+        printMonthUI: function (flag) {
+            return ctx + "/overtime/toMonth/"+flag;
         },
         listUI: function () {
             return ctx + "/sys/users/ui/list";
@@ -90,6 +94,7 @@ var OrgUser = {
             OrgUserEdit = $('#OrgUserEdit');
             OrgUserOrgTree = $('#OrgUserOrgTree');
             addTimeDialog = $('#addTimeDialog');
+            printMonthDialog = $('#printMonthDialog');
         },
         initOrgTree: function () {
             OrgUserOrgTree.tree({
@@ -232,6 +237,37 @@ var OrgUser = {
                             }
                         }
                     });
+                }
+            }).dialog("open");
+        },
+        printMonth:function(val){
+            /*var sels = OrgList.datagrid("getSelections");
+            if (sels.length < 1) {
+                $.messager.alert("对话框", "至少选择一行");
+                return;
+            }
+
+            if (sels.length > 1) {
+                $.messager.alert("对话框", "只能选择一行");
+                return;
+            }*/
+            printMonthDialog.dialog({
+                href: OrgUser.URL.printMonthUI(val),
+                onLoad: function () {
+                    //方案一：使用Form的load去load数据
+                    //OrgUserForm.form("load", OrgUser.URL.get(sels[0].id));
+                    //方案二：直接使用列表的row数据
+                    //OrgUserForm.form("load",sels[0]);
+                    //方案三：使用Ajax请求数据
+                    /*$.ajax({
+                        type: "GET",
+                        url: OrgUser.URL.addTime(sels[0].id),
+                        success: function (data) {
+                            if (data.code == 200) {
+                                $('#overTimeForm').form("load", data.data);
+                            }
+                        }
+                    });*/
                 }
             }).dialog("open");
         },

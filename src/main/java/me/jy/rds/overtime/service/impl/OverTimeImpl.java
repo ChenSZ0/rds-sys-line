@@ -138,6 +138,19 @@ public class OverTimeImpl implements OverTimeServie {
         return BaseResult.ok("保存成功");
     }
 
+    @Override
+    public BaseResult getMissPrintData(Date startDate, Date endDate) {
+        List<Overtime> missPrintData = overtimeMapper.getMissPrintData(startDate, endDate);
+        return BaseResult.ok("获取数据成功",missPrintData);
+    }
+
+    @Override
+    public BaseResult getTrialPrintData(Date startDate, Date endDate) {
+        List<Overtime> trialPrintData = overtimeMapper.getTrialPrintData(startDate, endDate);
+        return BaseResult.ok("获取数据成功",trialPrintData);
+    }
+
+
     private Date StringToDate(String str){
         try {
             return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(str);

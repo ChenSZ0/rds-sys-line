@@ -14,6 +14,21 @@ public class Overtime implements Serializable {
 
     private Boolean flag;
 
+    private String userNameArr;
+
+    private String userName;
+
+    private String reasonArr;
+
+    private Date startDate;
+
+    private Date endDate;
+
+    private int count;
+
+    private String flagArr;
+
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -54,6 +69,62 @@ public class Overtime implements Serializable {
 
     public void setFlag(Boolean flag) {
         this.flag = flag;
+    }
+
+    public String getUserNameArr() {
+        return userNameArr;
+    }
+
+    public void setUserNameArr(String userNameArr) {
+        this.userNameArr = userNameArr;
+    }
+
+    public String getReasonArr() {
+        return reasonArr;
+    }
+
+    public void setReasonArr(String reasonArr) {
+        this.reasonArr = reasonArr;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public String getFlagArr() {
+        return flagArr;
+    }
+
+    public void setFlagArr(String flagArr) {
+        this.flagArr = flagArr;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Override

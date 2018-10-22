@@ -208,4 +208,19 @@
       flag = #{flag,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <!--   ********************************************打印统计*********************************************   -->
+
+  <!-- 误餐补助统计-->
+  <select id="getMissPrintData" resultMap="BaseResultMap" parameterType="me.jy.rds.overtime.model.Overtime" >
+   SELECT DATE,GROUP_CONCAT(userName) userNameArr,GROUP_CONCAT(reason ) reasonArr,GROUP_CONCAT(flag) flagArr FROM
+(SELECT (SELECT NAME FROM org_user WHERE id=overtime.`user_id`) userName,DATE,reason,flag FROM overtime WHERE DATE BETWEEN #{startDate} AND #{endDate})
+a  GROUP BY DATE,flag
+  </select>
+
+  <!-- 补助费申请审批表统计-->
+  <select id="getTrialPrintData" resultMap="BaseResultMap" parameterType="me.jy.rds.overtime.model.Overtime" >
+SELECT COUNT(1) count,userName,GROUP_CONCAT(reason) reasonArr  FROM
+(SELECT user_id,(SELECT NAME FROM org_user WHERE id=overtime.`user_id`) userName,DATE,reason,flag FROM overtime WHERE DATE BETWEEN #{startDate} AND #{endDate})
+a  GROUP BY user_id,userName
+  </select>
 </mapper>
