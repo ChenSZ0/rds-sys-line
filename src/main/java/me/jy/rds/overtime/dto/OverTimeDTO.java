@@ -14,6 +14,7 @@ public class OverTimeDTO implements Serializable {
     private Long count;
     private List<String> outTime;
     private List<String> vacationTime;
+    private List<String> otherTime;
 
     public Long getId() {
         return id;
@@ -47,6 +48,14 @@ public class OverTimeDTO implements Serializable {
         this.vacationTime = vacationTime;
     }
 
+    public List<String> getOtherTime() {
+        return otherTime;
+    }
+
+    public void setOtherTime(List<String> otherTime) {
+        this.otherTime = otherTime;
+    }
+
     @Override
     public String toString() {
         return "OverTimeDTO{" +
@@ -54,6 +63,7 @@ public class OverTimeDTO implements Serializable {
                 ", count=" + count +
                 ", outTime=" + outTime +
                 ", vacationTime=" + vacationTime +
+                ", otherTime=" + otherTime +
                 '}';
     }
 }

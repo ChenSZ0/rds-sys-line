@@ -3,6 +3,7 @@ package me.jy.rds.org.service;
 import me.jy.rds.common.base.EUDataGridResult;
 import me.jy.rds.org.form.OrgUserForm;
 import me.jy.rds.org.model.OrgUser;
+import me.jy.rds.org.model.OrgUserExample;
 import me.jy.rds.sys.web.result.BaseResult;
 
 /**
@@ -18,4 +19,6 @@ public interface OrgUserService {
     BaseResult deleteByIds(String ids);
 
     BaseResult get(Long id);
+
+    int countByExample(OrgUserExample example);
 }

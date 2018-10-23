@@ -4,6 +4,7 @@
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" plain="true" onclick="javascript:OrgUser.list.add()">增加</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" plain="true" onclick="javascript:OrgUser.list.delete()">删除</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" plain="true" onclick="javascript:OrgUser.list.edit()">编辑</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" plain="true" onclick="javascript:OrgUser.list.excleImport()">饭堂就餐情况</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" plain="true" onclick="javascript:OrgUser.list.addTime()">加班情况</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" plain="true" onclick="javascript:OrgUser.list.printMonth(1)">误餐补助</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" plain="true" onclick="javascript:OrgUser.list.printMonth(2)">审批</a>
@@ -26,9 +27,11 @@
 <!-- 弹窗  --> <!-- inline:true 不然多次打开tab会重复提交表单 -->
 <div id="OrgUserEdit" title="用户"  style="width:500px;height:500px;top: 100px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){OrgUser.input.submitForm()}},{text:'取消',iconCls:'icon-cancel',handler:function(){OrgUser.input.close()}}]"></div>
 
-<div id="addTimeDialog" title="用户加班情况"  style="width:500px;height:500px;top: 100px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){form2Submit()}},{text:'取消',iconCls:'icon-cancel',handler:function(){OrgUser.input.close()}}]"></div>
+<div id="addTimeDialog" title="用户加班情况"  style="width:500px;height:500px;top: 100px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){form2Submit()}}]"></div>
 
 <div id="printMonthDialog" title="请选择日期"  style="width:600px;height:500px;top: 100px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){printMonthSubmit()}},{text:'取消',iconCls:'icon-cancel',handler:function(){OrgUser.input.close()}}]"></div>
+
+<div id="excleImport" title="导入就餐情况"  style="width:600px;height:500px;top: 100px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[]"></div>
 
 <script src="<%=request.getContextPath()%>/jsp/org/org-list.js"></script>
 <script>

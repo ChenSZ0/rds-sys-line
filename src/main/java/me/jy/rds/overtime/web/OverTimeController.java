@@ -53,7 +53,6 @@ public class OverTimeController {
     @RequestMapping(value = "/saveData",method = RequestMethod.POST)
     @ResponseBody
     public Object saveData(OverTimeDTO dto){
-        System.out.println(dto);
         return overTimeServie.saveData(dto);
     }
 

@@ -71,6 +71,11 @@ public class OrgUserServiceImpl implements OrgUserService {
         return BaseResult.ok("获取信息成功",orgUser);
     }
 
+    @Override
+    public int countByExample(OrgUserExample example) {
+        return orgUserMapper.countByExample(example);
+    }
+
     private List<Long> idsToList(String ids) {
         String[] id = ids.split(",");
         List<Long> idList = new ArrayList<>();

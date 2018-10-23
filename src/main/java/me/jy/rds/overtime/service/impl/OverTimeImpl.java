@@ -1,7 +1,13 @@
 package me.jy.rds.overtime.service.impl;
 
+import me.jy.rds.canteentime.dao.CanteentimeMapper;
+import me.jy.rds.canteentime.model.Canteentime;
+import me.jy.rds.canteentime.model.CanteentimeExample;
 import me.jy.rds.common.base.BaseResult;
 import me.jy.rds.org.dao.OrgUserMapper;
+import me.jy.rds.otherTime.dao.OtherTimeMapper;
+import me.jy.rds.otherTime.model.OtherTime;
+import me.jy.rds.otherTime.model.OtherTimeExample;
 import me.jy.rds.outtime.dao.OuttimeMapper;
 import me.jy.rds.outtime.model.Outtime;
 import me.jy.rds.outtime.model.OuttimeExample;
@@ -36,6 +42,10 @@ public class OverTimeImpl implements OverTimeServie {
     private OuttimeMapper outtimeMapper;
     @Autowired
     private VacationtimeMapper vacationtimeMapper;
+    @Autowired
+    private me.jy.rds.otherTime.dao.OtherTimeMapper otherTimeMapper;
+    @Autowired
+    private CanteentimeMapper canteentimeMapper;
 
     @Override
     public BaseResult getOverTime(Long userId) {
@@ -91,7 +101,34 @@ public class OverTimeImpl implements OverTimeServie {
             vacationtimeMapper.insert(vacationtime);
         }
 
+        //---------其他
+        OtherTimeExample otherTimeExample = new OtherTimeExample();
+        OtherTimeExample.Criteria criteria2 = otherTimeExample.createCriteria();
+        criteria2.andUserIdEqualTo(dto.getId());
+        result = otherTimeMapper.countByExample(otherTimeExample);
+        if(result>0)
+            otherTimeMapper.deleteByExample(otherTimeExample);
+
+        List<String> otherTimeList = dto.getOtherTime();
+        OtherTime otherTime = new OtherTime();
+        otherTime.setUserId(dto.getId());
+        for (int i = 0; i < otherTimeList.size(); i++) {
+            otherTime.setDate(StringToDate(otherTimeList.get(i)));
+            linkStr=linkStr+otherTime.getDate().getDay()+",";
+            otherTimeMapper.insert(otherTime);
+        }
+
+
 //       加班日期
+        CanteentimeExample canteentimeExample = new CanteentimeExample();
+        CanteentimeExample.Criteria criteria3 = canteentimeExample.createCriteria();
+        criteria3.andUserIdEqualTo(dto.getId());
+        criteria3.andDateBetween(getFirstday(),getLastday());
+        List<Canteentime> canteentimes = canteentimeMapper.selectByExample(canteentimeExample);
+        for (int i = 0; i < canteentimes.size(); i++) {
+            linkStr=linkStr+canteentimes.get(i).getDate().getDay()+",";
+        }
+
         OvertimeExample overtimeExample = new OvertimeExample();
         OvertimeExample.Criteria overtimeExampleCriteria = overtimeExample.createCriteria();
         overtimeExampleCriteria.andUserIdEqualTo(dto.getId());
@@ -101,7 +138,8 @@ public class OverTimeImpl implements OverTimeServie {
 
                 Overtime overtime = new Overtime();
                 overtime.setUserId(dto.getId());
-//          随机分配加班日期
+
+//              随机分配加班日期
                 Calendar c = Calendar.getInstance();
                 c.setTime(new Date());
                 c.add(Calendar.MONTH, 0);
@@ -109,6 +147,7 @@ public class OverTimeImpl implements OverTimeServie {
         Random rand = new Random();
         int index;
         Set<Integer> hashSet = new HashSet<>();
+        System.out.println("不能在的日期"+linkStr);
         while (true){
             index=rand.nextInt(maxDate)+1;
             if(!linkStr.contains(String.valueOf(index)))
@@ -128,6 +167,7 @@ public class OverTimeImpl implements OverTimeServie {
                     }else{
                         overtime.setFlag(false);
                     }
+                    overtime.setReason("办案加班");
                     overtimeMapper.insert(overtime);
                 }
 
@@ -159,6 +199,54 @@ public class OverTimeImpl implements OverTimeServie {
         }
         return null;
     }
+
+    /**
+     * 获取本月第一天
+     * @return
+     */
+    public static  Date getFirstday(){
+        Calendar cale = Calendar.getInstance();
+        cale = Calendar.getInstance();
+        cale.add(Calendar.MONTH, 0);
+        cale.set(Calendar.DAY_OF_MONTH, 1);
+        return cale.getTime();
+    }
+
+    /**
+     * 获取本月最后一天
+     * @return
+     */
+    public static Date getLastday(){
+        Calendar cale = Calendar.getInstance();
+        cale = Calendar.getInstance();
+        cale.add(Calendar.MONTH, 1);
+        cale.set(Calendar.DAY_OF_MONTH, 0);
+        return cale.getTime();
+    }
+
+   /* public static void main(String[] args) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String firstday = format.format(getFirstday());
+        String lastday = format.format(getLastday());
+        *//*Calendar cale = null;
+        cale = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String firstday, lastday;
+        // 获取前月的第一天
+        cale = Calendar.getInstance();
+        cale.add(Calendar.MONTH, 0);
+        cale.set(Calendar.DAY_OF_MONTH, 1);
+        Date ddt=cale.getTime();
+        System.out.println(ddt);
+        firstday = format.format(cale.getTime());
+        // 获取前月的最后一天
+        cale = Calendar.getInstance();
+        cale.add(Calendar.MONTH, 1);
+        cale.set(Calendar.DAY_OF_MONTH, 0);
+        lastday = format.format(cale.getTime());*//*
+        System.out.println("本月第一天和最后一天分别是 ： " + firstday + " and " + lastday);
+
+    }*/
 
 //    public static void main(String[] args) {
 //        Calendar c = Calendar.getInstance();

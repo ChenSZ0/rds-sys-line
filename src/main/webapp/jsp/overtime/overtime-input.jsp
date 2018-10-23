@@ -10,7 +10,7 @@
         </tr>
         <tr>
             <td></td>
-            <td><label>当月加班次数:</label></td>
+            <td><label>加班次数:</label></td>
             <td><input class="easyui-textbox com_input" type="text" name="count" data-options="required:true"/></td>
             <td></td>
         </tr>
@@ -26,6 +26,14 @@
             <td></td>
             <td><label>休假时间:&nbsp;&nbsp;</label></td>
             <td><input type="text" class="easyui-datetimebox vacationTimeAdd" required="required" name="vacationTime"><a href="javascript:outDate(2)">增加</a></td>
+            <td></td>
+        </tr>
+    </table>
+    <table class="com_table" align="center" id="tab3">
+        <tr>
+            <td></td>
+            <td><label>其他时间:&nbsp;&nbsp;</label></td>
+            <td><input type="text" class="easyui-datetimebox vacationTimeAdd" required="required" name="otherTime"><a href="javascript:outDate(3)">增加</a></td>
             <td></td>
         </tr>
     </table>
@@ -51,6 +59,13 @@
                 "            <td><input type=\"text\" class=\"easyui-datetimebox vacationTimeAdd\"  name=\"vacationTime\" required=\"required\"><a href=\"javascript:removeDate(2)\">移除</a></td>\n" +
                 "            <td></td>\n" +
                 "        </tr>").appendTo("#tab2");
+        }else if(obj==3){
+            var targetObj = $("<tr class='outData3'>\n" +
+                "            <td></td>\n" +
+                "            <td><label></label></td>\n" +
+                "            <td><input type=\"text\" class=\"easyui-datetimebox vacationTimeAdd\"  name=\"otherTime\" required=\"required\"><a href=\"javascript:removeDate(3)\">移除</a></td>\n" +
+                "            <td></td>\n" +
+                "        </tr>").appendTo("#tab3");
         }
         $.parser.parse(targetObj);
 
@@ -61,11 +76,14 @@
             $($(".outData")[$(".outData").length-1]).remove();
         }else if(obj==2){
             $($(".outData2")[$(".outData2").length-1]).remove();
+        }else if(obj==3){
+            $($(".outData3")[$(".outData3").length-1]).remove();
         }
     }
 
     function form2Submit(){
-        debugger;
+        if($("#overTimeForm").form('validate')){
+            debugger;
         var data =$("#overTimeForm").serialize();
         //console.log($("#overTimeForm").serialize());
         var beforeStr=data.substring(0,data.indexOf("outTime")-1);
@@ -75,6 +93,7 @@
         var arr=endStr.split("&");
         var outTimeData="";
         var vacationTimeData="";
+        var otherTimeData="";
         for(var i=0;i<arr.length;i++){
             var index=arr[i].indexOf("outTime=");
             if(index>-1){
@@ -83,13 +102,19 @@
                index= arr[i].indexOf("vacationTime=");
                if(index>-1){
                    vacationTimeData=vacationTimeData+arr[i].substring(13)+",";
+               }else {
+                   index= arr[i].indexOf("otherTime=");
+                   if(index>-1){
+                       otherTimeData=otherTimeData+arr[i].substring(10)+",";
+                   }
                }
+
             }
         }
         //console.log(outTimeData);
        // console.log(vacationTimeData);
 
-        var ajaxData=beforeStr+"&outTime="+outTimeData.substring(0,outTimeData.length-1)+"&vacationTime="+vacationTimeData.substring(0,vacationTimeData.length-1);
+        var ajaxData=beforeStr+"&outTime="+outTimeData.substring(0,outTimeData.length-1)+"&vacationTime="+vacationTimeData.substring(0,vacationTimeData.length-1)+"&otherTime="+otherTimeData.substring(0,otherTimeData.length-1);
         console.log(ajaxData);
         $.ajax({
             type: "POST",
@@ -106,6 +131,7 @@
 
             }
         });
+        }
     }
 
 </script>

@@ -3,6 +3,7 @@ var OrgList;
 var OrgUserEdit;
 var OrgUserForm;
 var printMonthDialog;
+var excleImportDialog;
 
 //其它组件
 var OrgUserOrgTree;
@@ -18,6 +19,9 @@ var OrgUser = {
         },
         overTimeUI: function () {
             return ctx + "/overtime/to/input";
+        },
+        excelUI: function () {
+            return ctx + "/overtime/to/excelImp";
         },
         printMonthUI: function (flag) {
             return ctx + "/overtime/toMonth/"+flag;
@@ -95,6 +99,7 @@ var OrgUser = {
             OrgUserOrgTree = $('#OrgUserOrgTree');
             addTimeDialog = $('#addTimeDialog');
             printMonthDialog = $('#printMonthDialog');
+            excleImportDialog = $('#excleImport');
         },
         initOrgTree: function () {
             OrgUserOrgTree.tree({
@@ -237,6 +242,28 @@ var OrgUser = {
                             }
                         }
                     });
+                }
+            }).dialog("open");
+        },
+        excleImport:function(){
+
+            excleImportDialog.dialog({
+                href: OrgUser.URL.excelUI(),
+                onLoad: function () {
+                    //方案一：使用Form的load去load数据
+                    //OrgUserForm.form("load", OrgUser.URL.get(sels[0].id));
+                    //方案二：直接使用列表的row数据
+                    //OrgUserForm.form("load",sels[0]);
+                    //方案三：使用Ajax请求数据
+                    /*$.ajax({
+                        type: "GET",
+                        url: OrgUser.URL.addTime(sels[0].id),
+                        success: function (data) {
+                            if (data.code == 200) {
+                                $('#overTimeForm').form("load", data.data);
+                            }
+                        }
+                    });*/
                 }
             }).dialog("open");
         },
