@@ -11,7 +11,7 @@
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" plain="true" onclick="javascript:OrgUser.list.reload()">刷新</a>
     <span style="float: right;margin-right: 10px;padding: 1px">
         <span>用户名:</span>
-        <input lang="searchSysUser" name="name" style="line-height:19px;border:1px solid #ccc">
+        <input lang="searchOrgUser" name="name" style="line-height:19px;border:1px solid #ccc">
         <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear'" plain="true" onclick="javascript:OrgUser.list.clear()">清除</a>
         <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" plain="true" onclick="javascript:OrgUser.list.search()">搜索</a>
     </span>

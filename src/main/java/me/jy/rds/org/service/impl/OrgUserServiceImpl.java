@@ -8,6 +8,7 @@ import me.jy.rds.org.model.OrgUser;
 import me.jy.rds.org.model.OrgUserExample;
 import me.jy.rds.org.service.OrgUserService;
 import me.jy.rds.sys.web.result.BaseResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,11 @@ public class OrgUserServiceImpl implements OrgUserService {
     @Override
     public EUDataGridResult listPage(OrgUserForm form) {
         OrgUserExample example = new OrgUserExample();
+        if (StringUtils.isNotBlank(form.getName())){
+            OrgUserExample.Criteria criteria = example.createCriteria();
+            criteria.andNameLike("%"+form.getName()+"%");
+        }
+
         //查询分页列表
         int page=(int) form.getPage().longValue();
         int rows=(int)form.getRows().longValue();
